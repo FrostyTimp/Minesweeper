@@ -1,7 +1,7 @@
 import de.bezier.guido.*;
 int NUM_ROWS = 10;
 int NUM_COLS = 10;
-int NUM_BOMBS = 1; 
+int NUM_BOMBS = 5; 
 private MSButton[][] buttons;
 private ArrayList <MSButton> bombs = new ArrayList <MSButton>();
 void setup()
@@ -26,9 +26,9 @@ public void setBombs()
         int bombX = (int)(Math.random() * NUM_COLS);
         int bombY = (int)(Math.random() * NUM_ROWS);
         if(!bombs.contains(buttons[bombY][bombX]))
-        {
             bombs.add(buttons[bombY][bombX]);
-        }
+        else
+            setBombs();
     }
 }
 public void draw()
@@ -72,6 +72,13 @@ public void displayLosingMessage()
         for(int col = 1; col < NUM_COLS; col += 2)
             buttons[row][col].setLabel("lose");
     }
+    for(int row = 0; row < NUM_ROWS; row++)
+    {
+        for(int col = 0; col < NUM_COLS; col++)
+            if(bombs.contains(buttons[row][col]))
+                buttons[row][col].clicked = true;
+    }
+    noLoop();
 }
 public void displayWinningMessage()
 {
